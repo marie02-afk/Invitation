@@ -6,54 +6,32 @@
 <title>Father's Day Invitation</title>
 
 <style>
-    body {
-        background-color: lavender;
-        font-family: Arial, sans-serif;
-        text-align: center;
-        padding: 50px;
-    }
+body {
+    background-color: lavender;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    padding: 50px;
+}
 
-    input {
-        padding: 10px;
-        border-radius: 5px;
-        border: 1px solid #ccc;
-        margin-right: 10px;
-    }
+input {
+    padding: 10px;
+    margin: 10px;
+}
 
-    button {
-        background-color: lightgreen;
-        border: none;
-        padding: 10px 20px;
-        font-size: 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        margin: 10px;
-        transition: all 0.3s ease;
-    }
+button {
+    background-color: lightgreen;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 10px;
+    border-radius: 5px;
+}
 
-    #yesBtn {
-        background-color: #4CAF50;
-        color: white;
-    }
-
-    #noBtn {
-        background-color: #ff6b6b;
-        color: white;
-        position: relative;
-    }
-
-    #gif {
-        display: none;
-        margin-top: 20px;
-        width: 250px;
-        border-radius: 10px;
-    }
-
-    #message {
-        color: crimson;
-        font-weight: bold;
-        margin-top: 15px;
-    }
+#gif {
+    display: none;
+    width: 250px;
+    margin-top: 20px;
+}
 </style>
 </head>
 
@@ -61,79 +39,65 @@
 
 <h1>Father's Day Invitation</h1>
 
-<label for="name">Enter your name:</label>
+<label>Enter your name:</label>
 <input type="text" id="name" placeholder="Your Name">
 
 <button id="submitBtn">Submit</button>
 
-<div id="invitation" style="display:none;"></div>
-
-<p id="message"></p>
+<div id="invitation"></div>
 
 <img
-    id="gif"
-    src="https://media.giphy.com/media/111ebonMs90YLu/giphy.gif"
-    alt="Celebration GIF"
+id="gif"
+src="https://media.giphy.com/media/111ebonMs90YLu/giphy.gif"
+alt="Celebration GIF"
+>
 
 
 <script>
 
 let yesScale = 1;
 
-document.getElementById('submitBtn').addEventListener('click', function () {
+document.getElementById("submitBtn").addEventListener("click", function () {
 
-    const name = document.getElementById('name').value.trim();
+    const name = document.getElementById("name").value.trim();
 
     if (name === "") {
         alert("Please enter your name first!");
         return;
     }
 
-    const invitationDiv = document.getElementById('invitation');
-
-    invitationDiv.innerHTML = `
-        <p>
-            Hi <strong>${name}</strong>! <br>
-            You are invited on June 21, 2026, to celebrate Father's Day.
-        </p>
-
-        <p>Will you come?</p>
-
-        <button id="yesBtn">Yes</button>
-        <button id="noBtn">No</button>
-    `;
-
-    invitationDiv.style.display = 'block';
+    document.getElementById("invitation").innerHTML =
+        "<p>Hi <b>" + name + "</b>! You are invited on June 21, 2026 for Father's Day.</p>" +
+        "<p>Will you come?</p>" +
+        '<button id="yesBtn">Yes</button>' +
+        '<button id="noBtn">No</button>';
 });
 
-document.addEventListener('click', function(event) {
+document.addEventListener("click", function(event) {
 
-    if (event.target.id === 'yesBtn') {
+    if (event.target.id === "yesBtn") {
 
-        document.getElementById('gif').style.display = 'block';
+        document.getElementById("gif").style.display = "block";
 
-        document.getElementById('invitation').innerHTML = `
-            <h2>Yay! See you there 🎉</h2>
-        `;
-
-        document.getElementById('message').textContent = "";
+        document.getElementById("invitation").innerHTML =
+            "<h2>Yay! See you there 🎉</h2>";
     }
 
-    if (event.target.id === 'noBtn') {
+    if (event.target.id === "noBtn") {
 
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById("noBtn");
+        const yesBtn = document.getElementById("yesBtn");
 
         const x = Math.random() * 200 - 100;
         const y = Math.random() * 100 - 50;
 
-        noBtn.style.transform = translate(${x}px, ${y}px);
+        noBtn.style.transform =
+            "translate(" + x + "px," + y + "px)";
 
         yesScale += 0.2;
-        yesBtn.style.transform = scale(${yesScale});
 
-        document.getElementById('message').textContent =
-            "We only accept YES 😆";
+        yesBtn.style.transform =
+            "scale(" + yesScale + ")";
     }
 });
 
