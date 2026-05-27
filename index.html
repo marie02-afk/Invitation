@@ -6,100 +6,272 @@
 <title>Father's Day Invitation</title>
 
 <style>
-body {
-    background-color: lavender;
+
+body{
+    margin:0;
+    padding:0;
     font-family: Arial, sans-serif;
-    text-align: center;
-    padding: 50px;
+    background: linear-gradient(to bottom right,#f8d7ff,#d6f5ff);
+    overflow-x:hidden;
+    text-align:center;
 }
 
-input {
-    padding: 10px;
-    margin: 10px;
+/* FIRST SCREEN */
+
+#formPage{
+    margin-top:120px;
 }
 
-button {
-    background-color: lightgreen;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    margin: 10px;
-    border-radius: 5px;
+h1{
+    font-size:48px;
+    color:#333;
 }
 
-#gif {
-    display: none;
-    width: 250px;
-    margin-top: 20px;
+input{
+    padding:12px;
+    width:220px;
+    border:none;
+    border-radius:10px;
+    font-size:16px;
 }
+
+button{
+    padding:12px 22px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+    transition:0.3s;
+}
+
+#submitBtn{
+    background:#7bed9f;
+}
+
+#submitBtn:hover{
+    transform:scale(1.05);
+}
+
+/* INVITATION PAGE */
+
+#invitationPage{
+    display:none;
+    padding-top:70px;
+}
+
+#yesBtn{
+    background:#2ed573;
+    color:white;
+    margin:10px;
+}
+
+#noBtn{
+    background:#ff6b81;
+    color:white;
+    margin:10px;
+    position:relative;
+}
+
+#yesBtn:hover,
+#noBtn:hover{
+    transform:scale(1.05);
+}
+
+/* SUCCESS PAGE */
+
+#successPage{
+    display:none;
+    padding-top:40px;
+}
+
+#familyPic{
+    width:300px;
+    border-radius:20px;
+    margin-top:20px;
+    box-shadow:0 0 15px rgba(0,0,0,0.2);
+}
+
+#gif{
+    width:220px;
+    margin-top:20px;
+}
+
+/* CRYING STICKERS */
+
+.crySticker{
+    position:absolute;
+    width:70px;
+    animation:float 3s linear forwards;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(0);
+        opacity:1;
+    }
+    to{
+        transform:translateY(-200px);
+        opacity:0;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>Father's Day Invitation</h1>
+<!-- FIRST PAGE -->
 
-<label>Enter your name:</label>
-<input type="text" id="name" placeholder="Your Name">
+<div id="formPage">
 
-<button id="submitBtn">Submit</button>
+    <h1>Father's Day Invitation 💙</h1>
 
-<div id="invitation"></div>
+    <p>Enter your name first!</p>
 
-<img
-id="gif"
-src="https://media.giphy.com/media/111ebonMs90YLu/giphy.gif"
-alt="Celebration GIF"
->
+    <input type="text" id="name" placeholder="Your Name">
 
+    <button id="submitBtn">Submit</button>
+
+</div>
+
+<!-- SECOND PAGE -->
+
+<div id="invitationPage">
+
+    <h1 id="welcomeText"></h1>
+
+    <p>
+        You are invited on June 21, 2026<br>
+        to celebrate Father's Day with us 💖
+    </p>
+
+    <h3>Will you come?</h3>
+
+    <button id="yesBtn">Yes 💚</button>
+    <button id="noBtn">No 💔</button>
+
+</div>
+
+<!-- SUCCESS PAGE -->
+
+<div id="successPage">
+
+    <h1>Yay! See you there 🎉</h1>
+
+    <img
+    id="gif"
+    src="https://media.giphy.com/media/111ebonMs90YLu/giphy.gif"
+    >
+
+    <br>
+
+    <!-- REPLACE THIS WITH YOUR FAMILY PICTURE -->
+    <img
+    id="familyPic"
+    src="https://images.unsplash.com/photo-1511895426328-dc8714191300?q=80&w=1000"
+    alt="Family Picture"
+    >
+
+</div>
+
+<!-- MUSIC -->
+<audio id="music">
+    <source src="https://www.bensound.com/bensound-music/bensound-love.mp3" type="audio/mpeg">
+</audio>
 
 <script>
 
 let yesScale = 1;
 
-document.getElementById("submitBtn").addEventListener("click", function () {
+/* SUBMIT BUTTON */
 
-    const name = document.getElementById("name").value.trim();
+document.getElementById("submitBtn").addEventListener("click",function(){
 
-    if (name === "") {
+    const name =
+    document.getElementById("name").value.trim();
+
+    if(name===""){
         alert("Please enter your name first!");
         return;
     }
 
-    document.getElementById("invitation").innerHTML =
-        "<p>Hi <b>" + name + "</b>! You are invited on June 21, 2026 for Father's Day.</p>" +
-        "<p>Will you come?</p>" +
-        '<button id="yesBtn">Yes</button>' +
-        '<button id="noBtn">No</button>';
+    // hide first page
+    document.getElementById("formPage").style.display="none";
+
+    // show invitation page
+    document.getElementById("invitationPage").style.display="block";
+
+    // personalized text
+    document.getElementById("welcomeText").innerHTML=
+    "Hi "+name+" 💖";
+
 });
 
-document.addEventListener("click", function(event) {
+/* YES BUTTON */
 
-    if (event.target.id === "yesBtn") {
+document.getElementById("yesBtn").addEventListener("click",function(){
 
-        document.getElementById("gif").style.display = "block";
+    document.getElementById("invitationPage").style.display="none";
 
-        document.getElementById("invitation").innerHTML =
-            "<h2>Yay! See you there 🎉</h2>";
-    }
+    document.getElementById("successPage").style.display="block";
 
-    if (event.target.id === "noBtn") {
+    // PLAY MUSIC
+    document.getElementById("music").play();
 
-        const noBtn = document.getElementById("noBtn");
-        const yesBtn = document.getElementById("yesBtn");
-
-        const x = Math.random() * 200 - 100;
-        const y = Math.random() * 100 - 50;
-
-        noBtn.style.transform =
-            "translate(" + x + "px," + y + "px)";
-
-        yesScale += 0.2;
-
-        yesBtn.style.transform =
-            "scale(" + yesScale + ")";
-    }
 });
+
+/* NO BUTTON */
+
+document.getElementById("noBtn").addEventListener("click",function(){
+
+    const noBtn =
+    document.getElementById("noBtn");
+
+    const yesBtn =
+    document.getElementById("yesBtn");
+
+    // move no button randomly
+    const x = Math.random()*300-150;
+    const y = Math.random()*100-50;
+
+    noBtn.style.transform =
+    "translate("+x+"px,"+y+"px)";
+
+    // enlarge yes button
+    yesScale += 0.15;
+
+    yesBtn.style.transform =
+    "scale("+yesScale+")";
+
+    // crying stickers
+    createCrySticker();
+
+});
+
+/* CREATE CRYING STICKERS */
+
+function createCrySticker(){
+
+    const sticker =
+    document.createElement("img");
+
+    sticker.src =
+    "https://cdn-icons-png.flaticon.com/512/742/742752.png";
+
+    sticker.classList.add("crySticker");
+
+    sticker.style.left =
+    Math.random()*window.innerWidth+"px";
+
+    sticker.style.top =
+    Math.random()*window.innerHeight+"px";
+
+    document.body.appendChild(sticker);
+
+    setTimeout(()=>{
+        sticker.remove();
+    },3000);
+}
 
 </script>
 
